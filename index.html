@@ -8,17 +8,20 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container"></div>
+
     <!-- Left Sidebar Navigation -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <img src="svg.svg" class="brand-logo" alt="Exciler Logo">
             <h1 class="brand-title">Exciler</h1>
             <p class="brand-tagline">Temporary Email Service</p>
         </div>
 
-        <nav class="sidebar-nav">
-            <button class="nav-item active" data-page="burner">
-                <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <nav class="sidebar-nav" role="navigation">
+            <button class="nav-item active" data-page="burner" aria-label="Quick Burner Email">
+                <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <div class="nav-item-content">
@@ -27,8 +30,8 @@
                 </div>
             </button>
             
-            <button class="nav-item" data-page="custom">
-                <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <button class="nav-item" data-page="custom" aria-label="Custom Email Account">
+                <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
                     <path d="M12 17C12.5523 17 13 16.5523 13 16C13 15.4477 12.5523 15 12 15C11.4477 15 11 15.4477 11 16C11 16.5523 11.4477 17 12 17Z" fill="currentColor"/>
                     <path d="M8 11V7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7V11" stroke="currentColor" stroke-width="2"/>
@@ -41,20 +44,23 @@
         </nav>
 
         <div class="sidebar-footer">
-            <a href="https://xpratik.vercel.app/" target="_blank" class="footer-link" id="footer-creator-link">
+            <a href="https://xpratik.vercel.app/" target="_blank" class="footer-link" id="footer-creator-link" rel="noopener noreferrer">
                 <span>Made by Pratik</span>
-                <img src="https://raw.githubusercontent.com/pratikonly/Notepad-main/refs/heads/main/public/logo.jpeg" alt="Logo" class="footer-logo" id="footer-logo">
+                <img src="https://raw.githubusercontent.com/pratikonly/Notepad-main/refs/heads/main/public/logo.jpeg" alt="Pratik's Logo" class="footer-logo" id="footer-logo">
             </a>
             <div class="sidebar-decoration"></div>
         </div>
     </aside>
 
     <!-- Mobile Menu Toggle -->
-    <button class="mobile-menu-toggle" id="mobile-menu-toggle">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         </svg>
     </button>
+
+    <!-- Backdrop for mobile -->
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
 
     <!-- Main Content Area -->
     <main class="main-content">
@@ -63,7 +69,7 @@
             <header class="page-header">
                 <div class="page-header-content">
                     <div class="page-icon-wrapper">
-                        <svg class="page-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="page-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
@@ -75,7 +81,7 @@
             <div class="content-grid">
                 <div class="glass-card primary-card">
                     <div class="card-header">
-                        <svg class="card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -83,57 +89,82 @@
                     </div>
                     
                     <div class="email-display-group">
-                        <input type="text" id="burner-email" class="email-input" readonly placeholder="Click 'Generate' to create instant email">
-                        <button id="burner-copy-btn" class="btn btn-icon" disabled title="Copy to clipboard">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <input type="text" id="burner-email" class="email-input" readonly placeholder="Click 'Generate' to create instant email" aria-label="Generated email address">
+                        <button id="burner-copy-btn" class="btn btn-icon" disabled title="Copy to clipboard" aria-label="Copy email to clipboard">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/>
                                 <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </button>
+                        <button id="burner-qr-btn" class="btn btn-icon" disabled title="Show QR Code" aria-label="Show QR code">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <rect x="3" y="3" width="8" height="8" rx="1" stroke="currentColor" stroke-width="2"/>
+                                <rect x="13" y="3" width="8" height="8" rx="1" stroke="currentColor" stroke-width="2"/>
+                                <rect x="3" y="13" width="8" height="8" rx="1" stroke="currentColor" stroke-width="2"/>
+                                <rect x="13" y="13" width="8" height="8" rx="1" stroke="currentColor" stroke-width="2"/>
                             </svg>
                         </button>
                     </div>
                     
                     <div class="action-group">
                         <button id="burner-generate-btn" class="btn btn-primary">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            Generate Email
+                            <span>Generate Email</span>
                         </button>
                         <button id="burner-refresh-btn" class="btn btn-secondary" disabled>
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M21.5 2V8H15.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M2.5 22V16H8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M19.13 8C18.1944 5.67654 16.444 3.77543 14.2343 2.65045C12.0246 1.52548 9.49814 1.24341 7.11384 1.85652C4.72954 2.46962 2.64664 3.93587 1.24 6.00003M21.89 18C20.9544 20.3235 19.204 22.2246 16.9943 23.3496C14.7846 24.4745 12.2581 24.7566 9.87384 24.1435C7.48954 23.5304 5.40664 22.0641 4 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            Refresh Inbox
+                            <span>Refresh Inbox</span>
+                        </button>
+                        <button id="burner-resume-btn" class="btn btn-secondary" style="display: none;">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            <span>Resume Last Session</span>
                         </button>
                     </div>
                     
                     <div class="status-bar">
                         <div class="status-item">
-                            <svg class="status-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="status-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
                                 <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                             </svg>
-                            <span id="burner-status">Ready to generate</span>
+                            <span id="burner-status" role="status" aria-live="polite">Ready to generate</span>
                         </div>
                         <div class="status-item">
-                            <span id="burner-timer"></span>
+                            <span id="burner-timer" aria-live="polite"></span>
                         </div>
                     </div>
                 </div>
 
                 <div class="glass-card">
                     <div class="card-header">
-                        <svg class="card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M22 12H18L15 21L9 3L6 12H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <h2>Inbox</h2>
+                        <div class="header-left">
+                            <svg class="card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M22 12H18L15 21L9 3L6 12H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <h2>Inbox</h2>
+                            <span id="burner-email-count" class="email-count">0</span>
+                        </div>
+                        <div class="inbox-actions">
+                            <input type="text" id="burner-search" class="search-input" placeholder="Search emails..." aria-label="Search emails">
+                            <button id="burner-delete-all-btn" class="btn btn-small btn-danger" style="display: none;" title="Delete all emails">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                     
                     <div id="burner-inbox" class="inbox-container">
                         <div class="empty-state">
-                            <svg class="empty-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="empty-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2"/>
                                 <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="2"/>
                             </svg>
@@ -146,7 +177,14 @@
                 <div id="burner-viewer" class="glass-card viewer-card" style="display: none;">
                     <div class="card-header">
                         <h2>Email Details</h2>
-                        <button id="burner-close-viewer" class="btn btn-small">Close</button>
+                        <div class="viewer-actions">
+                            <button id="burner-delete-email-btn" class="btn btn-small btn-danger" title="Delete email">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                            </button>
+                            <button id="burner-close-viewer" class="btn btn-small">Close</button>
+                        </div>
                     </div>
                     <div class="email-details">
                         <div class="detail-row">
@@ -175,7 +213,7 @@
             <header class="page-header">
                 <div class="page-header-content">
                     <div class="page-icon-wrapper">
-                        <svg class="page-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="page-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
                             <path d="M12 17C12.5523 17 13 16.5523 13 16C13 15.4477 12.5523 15 12 15C11.4477 15 11 15.4477 11 16C11 16.5523 11.4477 17 12 17Z" fill="currentColor"/>
                             <path d="M8 11V7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7V11" stroke="currentColor" stroke-width="2"/>
@@ -185,19 +223,19 @@
                     <p class="page-subtitle">Create your own email with custom username and password</p>
                     <div class="benefits-section">
                         <div class="benefit-item">
-                            <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                             <span>Re-login anytime to access your inbox</span>
                         </div>
                         <div class="benefit-item">
-                            <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                             <span>Keep your email as long as you need</span>
                         </div>
                         <div class="benefit-item">
-                            <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                             <span>Secure access with custom password</span>
@@ -218,33 +256,33 @@
                     <div id="login-tab" class="auth-form active">
                         <h2>Login to Your Account</h2>
                         <div class="form-group">
-                            <label>Email Address</label>
+                            <label for="login-email">Email Address</label>
                             <div class="input-with-icon">
-                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                     <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2"/>
                                     <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="2"/>
                                 </svg>
-                                <input type="text" id="login-email" class="form-input" placeholder="your-email@domain.com">
+                                <input type="text" id="login-email" class="form-input" placeholder="your-email@domain.com" aria-required="true">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Password</label>
+                            <label for="login-password">Password</label>
                             <div class="input-with-icon">
-                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                     <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
                                     <path d="M12 17C12.5523 17 13 16.5523 13 16C13 15.4477 12.5523 15 12 15C11.4477 15 11 15.4477 11 16C11 16.5523 11.4477 17 12 17Z" fill="currentColor"/>
                                     <path d="M8 11V7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7V11" stroke="currentColor" stroke-width="2"/>
                                 </svg>
-                                <input type="password" id="login-password" class="form-input" placeholder="Enter your password">
+                                <input type="password" id="login-password" class="form-input" placeholder="Enter your password" aria-required="true">
                             </div>
                         </div>
                         <button id="login-btn" class="btn btn-primary btn-full">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M15 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                                 <path d="M10 17L15 12L10 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M15 12H3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                             </svg>
-                            Login
+                            <span>Login</span>
                         </button>
                     </div>
 
@@ -252,38 +290,38 @@
                     <div id="signup-tab" class="auth-form">
                         <h2>Create New Account</h2>
                         <div class="form-group">
-                            <label>Choose Username</label>
+                            <label for="signup-username">Choose Username</label>
                             <div class="input-with-icon">
-                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                     <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                                     <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
                                 </svg>
-                                <input type="text" id="signup-username" class="form-input" placeholder="yourname">
+                                <input type="text" id="signup-username" class="form-input" placeholder="yourname" aria-required="true">
                             </div>
                             <div class="domain-selector">
                                 <span>@</span>
-                                <select id="signup-domain" class="domain-select">
+                                <select id="signup-domain" class="domain-select" aria-label="Select domain">
                                     <option>Loading domains...</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Password</label>
+                            <label for="signup-password">Password</label>
                             <div class="input-with-icon">
-                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                     <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
                                     <path d="M8 11V7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7V11" stroke="currentColor" stroke-width="2"/>
                                 </svg>
-                                <input type="password" id="signup-password" class="form-input" placeholder="Create a password">
+                                <input type="password" id="signup-password" class="form-input" placeholder="Create a password" aria-required="true">
                             </div>
                         </div>
                         <button id="signup-btn" class="btn btn-primary btn-full">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M16 21V5C16 3.89543 15.1046 3 14 3H10C8.89543 3 8 3.89543 8 5V21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                                 <path d="M12 11V21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                                 <path d="M20 7L12 11L4 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            Create Account
+                            <span>Create Account</span>
                         </button>
                     </div>
                 </div>
@@ -291,8 +329,8 @@
                 <!-- Logged In Section -->
                 <div id="custom-inbox-section" class="glass-card primary-card" style="display: none;">
                     <div class="card-header">
-                        <div>
-                            <svg class="card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <div class="header-left">
+                            <svg class="card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2"/>
                                 <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="2"/>
                             </svg>
@@ -302,48 +340,67 @@
                     </div>
                     
                     <div class="email-display-group">
-                        <input type="text" id="custom-email" class="email-input" readonly>
-                        <button id="custom-copy-btn" class="btn btn-icon" title="Copy to clipboard">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <input type="text" id="custom-email" class="email-input" readonly aria-label="Your email address">
+                        <button id="custom-copy-btn" class="btn btn-icon" title="Copy to clipboard" aria-label="Copy email to clipboard">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/>
                                 <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </button>
+                        <button id="custom-qr-btn" class="btn btn-icon" title="Show QR Code" aria-label="Show QR code">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <rect x="3" y="3" width="8" height="8" rx="1" stroke="currentColor" stroke-width="2"/>
+                                <rect x="13" y="3" width="8" height="8" rx="1" stroke="currentColor" stroke-width="2"/>
+                                <rect x="3" y="13" width="8" height="8" rx="1" stroke="currentColor" stroke-width="2"/>
+                                <rect x="13" y="13" width="8" height="8" rx="1" stroke="currentColor" stroke-width="2"/>
                             </svg>
                         </button>
                     </div>
                     
                     <div class="action-group">
                         <button id="custom-refresh-btn" class="btn btn-secondary btn-full">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M21.5 2V8H15.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M2.5 22V16H8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M19.13 8C18.1944 5.67654 16.444 3.77543 14.2343 2.65045C12.0246 1.52548 9.49814 1.24341 7.11384 1.85652C4.72954 2.46962 2.64664 3.93587 1.24 6.00003M21.89 18C20.9544 20.3235 19.204 22.2246 16.9943 23.3496C14.7846 24.4745 12.2581 24.7566 9.87384 24.1435C7.48954 23.5304 5.40664 22.0641 4 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            Refresh Inbox
+                            <span>Refresh Inbox</span>
                         </button>
                     </div>
                     
                     <div class="status-bar">
                         <div class="status-item">
-                            <svg class="status-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="status-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
                                 <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                             </svg>
-                            <span id="custom-status">Logged in</span>
+                            <span id="custom-status" role="status" aria-live="polite">Logged in</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="glass-card">
                     <div class="card-header">
-                        <svg class="card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M22 12H18L15 21L9 3L6 12H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <h2>Inbox</h2>
+                        <div class="header-left">
+                            <svg class="card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M22 12H18L15 21L9 3L6 12H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <h2>Inbox</h2>
+                            <span id="custom-email-count" class="email-count">0</span>
+                        </div>
+                        <div class="inbox-actions">
+                            <input type="text" id="custom-search" class="search-input" placeholder="Search emails..." aria-label="Search emails">
+                            <button id="custom-delete-all-btn" class="btn btn-small btn-danger" style="display: none;" title="Delete all emails">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                     
                     <div id="custom-inbox" class="inbox-container">
                         <div class="empty-state">
-                            <svg class="empty-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="empty-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2"/>
                                 <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="2"/>
                             </svg>
@@ -356,7 +413,14 @@
                 <div id="custom-viewer" class="glass-card viewer-card" style="display: none;">
                     <div class="card-header">
                         <h2>Email Details</h2>
-                        <button id="custom-close-viewer" class="btn btn-small">Close</button>
+                        <div class="viewer-actions">
+                            <button id="custom-delete-email-btn" class="btn btn-small btn-danger" title="Delete email">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                            </button>
+                            <button id="custom-close-viewer" class="btn btn-small">Close</button>
+                        </div>
                     </div>
                     <div class="email-details">
                         <div class="detail-row">
@@ -382,15 +446,33 @@
 
         <!-- Footer -->
         <footer class="main-footer">
-            <p> All emails are temporary and automatically deleted. Do not use for important communications.</p>
+            <p>⚠️ All emails are temporary and automatically deleted. Do not use for important communications.</p>
         </footer>
     </main>
+
+    <!-- QR Code Modal -->
+    <div id="qr-modal" class="modal" style="display: none;">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h2>QR Code</h2>
+                <button id="qr-close-btn" class="btn btn-icon" aria-label="Close QR modal">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="qr-code" class="qr-code-container"></div>
+                <p class="qr-email-text" id="qr-email-text"></p>
+                <p class="qr-info">Scan this code to copy the email address</p>
+            </div>
+        </div>
+    </div>
 
     <div id="loading-overlay" class="loading-overlay" style="display: none;">
         <div class="spinner"></div>
         <p>Loading...</p>
     </div>
-
 
     <script src="script.js"></script>
 </body>
